@@ -35,3 +35,15 @@
 若出现 `UnknownHostException`，应先检查设备或模拟器的网络与 DNS；这不代表明文策略拦截。若服务返回 404、500 或重定向，也不能记为 HTTP 200。
 
 **HTTP 仅用于教学对比，实际服务优先 HTTPS。**
+
+## 实验三：校园巡检页面
+
+使用 Android Studio 打开项目根目录，等待 Gradle 同步，连接 Android 设备或启动模拟器，然后运行 `app`。页面固定显示实验室 A203、设备总数 10、已检查 3、未检查 7。点击“请求 A203”或“请求 A204”，查看 HTTPS 地址、HTTP 状态码及回显中的 `args.room`。调试构建也可执行 `gradlew.bat :app:assembleDebug`。
+
+三个源码文件位于 `app/src/main/java/com/example/firstkotlinapp/`：
+
+- `MainActivity.kt`：应用入口，设置 Compose 页面并安排后台请求与结果更新。
+- `InspectionScreen.kt`：显示巡检信息、两个请求按钮，并计算未检查数量。
+- `InspectionNetwork.kt`：使用 OkHttp 发起 HTTPS 请求，返回状态码、部分响应和错误信息。
+
+网络测试接口为 `https://httpbin.org/get?room=A203` 和 `https://httpbin.org/get?room=A204`。接口只用于公共参数回显，不代表真实巡检任务，也不保存巡检记录。
